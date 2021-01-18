@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Select, Button, Empty, Spin, Drawer, Row, Col } from "antd";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { AttachmentItem } from "../components/attachments";
-import { getFile } from "../db/controllers";
 
 const { Option } = Select;
 
@@ -62,29 +61,14 @@ export const AttachmentsScreen = (props) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [isNew, setIsNew] = useState(false);
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(0);
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    loadData();
-  }, [page]);
+  }, []);
 
-  let id = 2;
-  const loadData = () => {
-    setLoading(true);
-    getFile(page, id, (result) => {
-      if (result.status) {
-        setLoading(false);
-        setData(result.files);
-        setCount(result.total);
-        setPages(result.pages);
-      }
-    });
-  };
+
   
   return (
     <div className="page">
@@ -104,8 +88,8 @@ export const AttachmentsScreen = (props) => {
       <section className="attachment-list">
         <Row gutter={[20, 20]}>
           {
-            data.map(item => <Col key={item.id} md={12} lg={8}>
-              <AttachmentItem item={item}  user="ali sabar"/>
+            files.map(item => <Col key={item.id} md={12} lg={8}>
+              <AttachmentItem item={item} />
             </Col>)
           }
 

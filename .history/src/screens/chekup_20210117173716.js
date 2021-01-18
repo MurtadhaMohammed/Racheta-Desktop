@@ -214,7 +214,7 @@ export const ChekupScreen = (props) => {
                 block
                 className="add-btn"
                 onClick={()=>{
-                  setPrescriptionData(...prescriptionData,{name:drugName,note:drugNote});
+                  setPrescriptionData(... prescriptionData,{name:drugName,note:drugNote});
                 }}
                 icon={<PlusOutlined />}
               />

@@ -73,7 +73,7 @@ export const AttachmentsScreen = (props) => {
     loadData();
   }, [page]);
 
-  let id = 2;
+  let id = 1;
   const loadData = () => {
     setLoading(true);
     getFile(page, id, (result) => {

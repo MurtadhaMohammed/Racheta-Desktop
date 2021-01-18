@@ -185,7 +185,8 @@ export const ChekupScreen = (props) => {
             <Col span={12}>
               {InputFiled("Prescription")}
               <Select
-                onChange={(value) => setDrugName(value)}
+                onChange={(value) => setPrescriptionData({name:value})}
+                // onChange={(value) => setDrugName(value)}
                 size="large"
                 showSearch
                 allowClear
@@ -198,7 +199,8 @@ export const ChekupScreen = (props) => {
 
             <Col span={9} style={{ display: "flex", alignItems: "flex-end" }}>
               <Input value={drugNote}
-                onChange={(e) => setDrugNote(e.target.value)}
+                // onChange={(e) => setDrugNote(e.target.value)}
+                onChange={(e) => setPrescriptionData({note:e.target.value})}
                 size="large" placeholder="Note" />
             </Col>
             <Col

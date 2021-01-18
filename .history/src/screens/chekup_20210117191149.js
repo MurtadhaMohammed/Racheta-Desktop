@@ -185,7 +185,8 @@ export const ChekupScreen = (props) => {
             <Col span={12}>
               {InputFiled("Prescription")}
               <Select
-                onChange={(value) => setDrugName(value)}
+                onChange={(value) => setPrescriptionData({name:value})}
+                // onChange={(value) => setDrugName(value)}
                 size="large"
                 showSearch
                 allowClear

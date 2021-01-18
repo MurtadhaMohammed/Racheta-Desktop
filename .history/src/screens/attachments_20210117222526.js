@@ -104,8 +104,8 @@ export const AttachmentsScreen = (props) => {
       <section className="attachment-list">
         <Row gutter={[20, 20]}>
           {
-            data.map(item => <Col key={item.id} md={12} lg={8}>
-              <AttachmentItem item={item}  user="ali sabar"/>
+            files.map(item => <Col key={item.id} md={12} lg={8}>
+              <AttachmentItem item={item} />
             </Col>)
           }
 

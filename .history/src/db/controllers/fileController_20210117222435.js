@@ -22,11 +22,11 @@ export const AddFile = async (data, callback) => {
 export const getFile = async (page, patientId, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
-    var patientWhere = patientId == null ? '%%' : `%${patientId}%`;
+    // var patientWhere = patientId == "" ? '%%' : `%${patientId}%`;
     let paginate = {
         where: {
             [Op.and]: [
-                { PatientId: { [Op.like]: patientWhere } },
+                { PatientId: { [Op.like]: `%${patientId}%` } },
             ],
         },
         limit,
