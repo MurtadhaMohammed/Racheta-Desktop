@@ -47,10 +47,10 @@ export const getFile = async (page, patientId, callback) => {
     }
 };
 
-export const getAttachments = async (page, patientName, callback) => {
+export const getAttachments = async (page, patientId, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
-    var patientWhere = patientName == null ? '%%' : `%${patientName}%`;
+    var patientWhere = patientId == null ? '%%' : `%${patientId}%`;
     let paginate = {
         where: {
             [Op.and]: [

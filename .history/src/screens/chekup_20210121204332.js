@@ -7,11 +7,10 @@ import { DrugItem, FileItem } from "../components/chekup";
 import { DropZon } from "../components";
 import { FileStore } from "../store/fileStore";
 import { VisitStore } from "../store/visitStore";
-import { AddFile, createVisit, deleteFile, getDrug, getFile } from "../db/controllers";
+import { AddFile, createVisit, getDrug, getFile } from "../db/controllers";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-var path = require('path');
 const fs = require('fs');
 
 const { Option } = Select;
@@ -23,6 +22,49 @@ const InputFiled = (label, input) => (
     <div style={{ display: "flex" }}>{input}</div>
   </div>
 );
+
+// const selectedDrugs = [
+//   {
+//     id: 34,
+//     name: "New Test Drug name",
+//     note: "this is just test note",
+//   },
+//   {
+//     id: 56,
+//     name: "Drug name for test only",
+//     note: "this is a test",
+//   },
+//   {
+//     id: 43,
+//     name: "Foo Bar",
+//     note: "just test note",
+//   },
+// ];
+
+// const files = [
+//   {
+//     id: 1,
+//     title: 'Test DH results doers Foo Yees',
+//     name: 'مرتضى محمد علاء',
+//     date: 'Nov 20, 2020',
+//     type: 'pdf'
+//   },
+//   {
+//     id: 3,
+//     title: 'Test DH results doers Bar Noo This Test Only',
+//     name: 'ِAli Salam',
+//     date: 'Nov 20, 2020',
+//     type: 'xls'
+//   },
+//   {
+//     id: 89,
+//     title: 'Test DH results doers',
+//     name: 'Marwa Salam',
+//     date: 'Nov 20, 2020',
+//     type: 'pdf'
+//   },
+// ]
+
 
 export const ChekupScreen = (props) => {
   const [loading, setLoading] = useState(true);
@@ -39,13 +81,22 @@ export const ChekupScreen = (props) => {
 
   const distDir = './attach/'; // attachements folder path
   let { id } = useParams(); // get patient id 
+  // let {
+  //   name,
+  //   patientId,
+  //   setName,
+  //   setPatientId
+  // } = FileStore();
+
   let fileStore = FileStore();
+
   let visitStore = VisitStore();
 
   useEffect(() => {
     setDrugName("");
     setDrugNote("");
-    // console.log(JSON.stringify(selectedDrugs));
+    console.log(JSON.stringify(selectedDrugs));
+
     loadDrug(); // get drugs 
     loadData();
   }, [page, selectedDrugs]);
@@ -99,15 +150,15 @@ export const ChekupScreen = (props) => {
     }
   };
 
-  const handleDeleteFile = (id, fileName) => {
-    let fullPath = path.resolve(distDir);
-    deleteFile(id, (result) => {
+  const handleDeleteFile = (id,path) => {
+    deleteFile(id,(result) => {
       if (result.status) {
         message.success("delte successfully .");
         loadData();
-        fs.unlinkSync(fullPath +"\\"+ fileName);
+        fs.unlinkSync(path);
       }
-    })
+    }
+    )
   }
   // =============================================
   // ============================================
@@ -159,7 +210,7 @@ export const ChekupScreen = (props) => {
       }
     });
   };
-
+  
 
   return (
     <div className="page" style={{ paddingTop: 25 }}>
@@ -218,7 +269,7 @@ export const ChekupScreen = (props) => {
             <Col span={24}>
               <div className="selected-drugs">
                 {selectedDrugs.map((item) => (
-                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug} />
+                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug}/>
                 ))}
               </div>
             </Col>
@@ -239,7 +290,7 @@ export const ChekupScreen = (props) => {
           <h4>Attachments</h4>
           <DropZon onChange={file => handleFileUpload(file)} />
           {
-            fileData.map(item => <FileItem key={item.id} item={item} onRemove={handleDeleteFile} />)
+            fileData.map(item => <FileItem key={item.id} item={item} />)
           }
         </Col>
       </Row>

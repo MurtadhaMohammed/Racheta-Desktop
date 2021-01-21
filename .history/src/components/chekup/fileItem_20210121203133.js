@@ -1,16 +1,18 @@
 import React from "react";
-import { Button } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { Button, message } from "antd";
+import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
+import { FaMapMarkerAlt, FaCopy } from "react-icons/fa";
+import Avatar from "antd/lib/avatar/avatar";
 const { shell } = require('electron')
 var fs = require('fs');
 var path = require('path');
-export const FileItem = ({ item, onRemove }) => {
+export const FileItem = ({ item }) => {
 
   const handleOpenFile = () => {
     const distDir = './attach/'; // attachements folder path
     if (fs.existsSync(distDir)) {
       let fullPath = path.resolve(distDir);
-      shell.openPath(fullPath + "\\" + item.name);
+      shell.openPath(fullPath+"\\"+item.name);
     }
   }
 
@@ -28,9 +30,14 @@ export const FileItem = ({ item, onRemove }) => {
         style={{ marginRight: -4 }}
         type="text"
         danger
-        onClick={(e) => {
+        onClick={(e) =>{
           e.stopPropagation();
-          onRemove(item.id, item.name)
+          deleteFile(item.id,(result) => {
+            if (result.status) {
+              message.destroy("delte successfully .");
+            }
+          }
+          )
         }}
         icon={<DeleteOutlined />}
       />

@@ -24,6 +24,49 @@ const InputFiled = (label, input) => (
   </div>
 );
 
+// const selectedDrugs = [
+//   {
+//     id: 34,
+//     name: "New Test Drug name",
+//     note: "this is just test note",
+//   },
+//   {
+//     id: 56,
+//     name: "Drug name for test only",
+//     note: "this is a test",
+//   },
+//   {
+//     id: 43,
+//     name: "Foo Bar",
+//     note: "just test note",
+//   },
+// ];
+
+// const files = [
+//   {
+//     id: 1,
+//     title: 'Test DH results doers Foo Yees',
+//     name: 'مرتضى محمد علاء',
+//     date: 'Nov 20, 2020',
+//     type: 'pdf'
+//   },
+//   {
+//     id: 3,
+//     title: 'Test DH results doers Bar Noo This Test Only',
+//     name: 'ِAli Salam',
+//     date: 'Nov 20, 2020',
+//     type: 'xls'
+//   },
+//   {
+//     id: 89,
+//     title: 'Test DH results doers',
+//     name: 'Marwa Salam',
+//     date: 'Nov 20, 2020',
+//     type: 'pdf'
+//   },
+// ]
+
+
 export const ChekupScreen = (props) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -39,13 +82,22 @@ export const ChekupScreen = (props) => {
 
   const distDir = './attach/'; // attachements folder path
   let { id } = useParams(); // get patient id 
+  // let {
+  //   name,
+  //   patientId,
+  //   setName,
+  //   setPatientId
+  // } = FileStore();
+
   let fileStore = FileStore();
+
   let visitStore = VisitStore();
 
   useEffect(() => {
     setDrugName("");
     setDrugNote("");
-    // console.log(JSON.stringify(selectedDrugs));
+    console.log(JSON.stringify(selectedDrugs));
+
     loadDrug(); // get drugs 
     loadData();
   }, [page, selectedDrugs]);

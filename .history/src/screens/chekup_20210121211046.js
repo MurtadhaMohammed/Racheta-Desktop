@@ -45,7 +45,8 @@ export const ChekupScreen = (props) => {
   useEffect(() => {
     setDrugName("");
     setDrugNote("");
-    // console.log(JSON.stringify(selectedDrugs));
+    console.log(JSON.stringify(selectedDrugs));
+
     loadDrug(); // get drugs 
     loadData();
   }, [page, selectedDrugs]);

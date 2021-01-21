@@ -39,13 +39,22 @@ export const ChekupScreen = (props) => {
 
   const distDir = './attach/'; // attachements folder path
   let { id } = useParams(); // get patient id 
+  // let {
+  //   name,
+  //   patientId,
+  //   setName,
+  //   setPatientId
+  // } = FileStore();
+
   let fileStore = FileStore();
+
   let visitStore = VisitStore();
 
   useEffect(() => {
     setDrugName("");
     setDrugNote("");
-    // console.log(JSON.stringify(selectedDrugs));
+    console.log(JSON.stringify(selectedDrugs));
+
     loadDrug(); // get drugs 
     loadData();
   }, [page, selectedDrugs]);
