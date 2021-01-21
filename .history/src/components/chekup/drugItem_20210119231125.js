@@ -4,7 +4,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { FaMapMarkerAlt, FaCopy } from "react-icons/fa";
 import Avatar from "antd/lib/avatar/avatar";
 
-export const DrugItem = ({ item,onRemove }) => {
+export const DrugItem = ({ item ,onDelete}) => {
   return (
     <div className="drug-item">
       <div className="item-drug">
@@ -18,7 +18,7 @@ export const DrugItem = ({ item,onRemove }) => {
           <Button
             style={{ marginRight: -4 }}
             danger
-            onClick={() => onRemove(item.id)}
+            onClick={onDelete}
             type="text"
             icon={<CloseOutlined />}
           />

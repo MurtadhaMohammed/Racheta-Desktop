@@ -6,8 +6,7 @@ import { PlusOutlined, SaveOutlined } from "@ant-design/icons";
 import { DrugItem, FileItem } from "../components/chekup";
 import { DropZon } from "../components";
 import { FileStore } from "../store/fileStore";
-import { VisitStore } from "../store/visitStore";
-import { AddFile, createVisit, getDrug, getFile } from "../db/controllers";
+import { AddFile, getDrug, getFile } from "../db/controllers";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -81,16 +80,12 @@ export const ChekupScreen = (props) => {
 
   const distDir = './attach/'; // attachements folder path
   let { id } = useParams(); // get patient id 
-  // let {
-  //   name,
-  //   patientId,
-  //   setName,
-  //   setPatientId
-  // } = FileStore();
-
-  let fileStore = FileStore();
-
-  let visitStore = VisitStore();
+  let {
+    name,
+    patientId,
+    setName,
+    setPatientId
+  } = FileStore();
 
   useEffect(() => {
     setDrugName("");
@@ -99,7 +94,7 @@ export const ChekupScreen = (props) => {
 
     loadDrug(); // get drugs 
     loadData();
-  }, [page, selectedDrugs]);
+  }, [page,selectedDrugs]);
 
   // file block
   // =======================================
@@ -119,8 +114,8 @@ export const ChekupScreen = (props) => {
     let data = { name, PatientId };
     AddFile(data, (status) => {
       if (status) {
-        fileStore.setName(null);
-        fileStore.setPatientId(null);
+        setName(null);
+        setPatientId(null);
         loadData();
         message.success("Insert successfully .");
       } else {
@@ -179,27 +174,7 @@ export const ChekupScreen = (props) => {
     setSelectedDrugs(selectedDrugs.filter((el) => el.id !== id));
   };
 
-  const createCheckup = () => {
-    let date = new Date().toString();
-    let pres = JSON.stringify(selectedDrugs);
-    let diagnosis = visitStore.diagnosis;
-    let PatientId = id;
-    let data = { date, diagnosis, pres, PatientId };
-    // console.log(data);
-    createVisit(data, (status) => {
-      if (status) {
-        visitStore.setDate(null);
-        visitStore.setDiagnosis(null);
-        visitStore.setPres(null);
-        visitStore.setPatientId(null);
 
-        message.success("Insert successfully .");
-      } else {
-        message.error("The process is not complete!");
-      }
-    });
-  };
-  
 
   return (
     <div className="page" style={{ paddingTop: 25 }}>
@@ -210,8 +185,6 @@ export const ChekupScreen = (props) => {
               {InputFiled(
                 "The diagnosis",
                 <TextArea
-                  value={visitStore.diagnosis}
-                  onChange={(e) => visitStore.setDiagnosis(e.target.value)}
                   style={{ width: "100%" }}
                   rows={6}
                   placeholder="Write The diagnosis hire . . ."
@@ -258,7 +231,7 @@ export const ChekupScreen = (props) => {
             <Col span={24}>
               <div className="selected-drugs">
                 {selectedDrugs.map((item) => (
-                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug}/>
+                  <DrugItem key={item.id} item={item} onDelete={handlRemoveDrug}/>
                 ))}
               </div>
             </Col>
@@ -267,7 +240,6 @@ export const ChekupScreen = (props) => {
                 type="link"
                 className="add-btn"
                 size="large"
-                onClick={createCheckup}
                 icon={<SaveOutlined />}
               >
                 Save & Print

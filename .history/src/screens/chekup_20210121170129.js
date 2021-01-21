@@ -179,13 +179,24 @@ export const ChekupScreen = (props) => {
     setSelectedDrugs(selectedDrugs.filter((el) => el.id !== id));
   };
 
-  const createCheckup = () => {
+  // date
+  // diagnosis
+  // pres
+  // PatientId
+  // setDate
+  // setDiagnosis
+  // setPres
+  // setPatientId
+
+  const createCheckup = (patientId) => {
     let date = new Date().toString();
     let pres = JSON.stringify(selectedDrugs);
     let diagnosis = visitStore.diagnosis;
-    let PatientId = id;
-    let data = { date, diagnosis, pres, PatientId };
+    let data = { date, diagnosis, pres, patientId };
     // console.log(data);
+
+
+
     createVisit(data, (status) => {
       if (status) {
         visitStore.setDate(null);
@@ -199,7 +210,7 @@ export const ChekupScreen = (props) => {
       }
     });
   };
-  
+  // }
 
   return (
     <div className="page" style={{ paddingTop: 25 }}>
@@ -258,7 +269,7 @@ export const ChekupScreen = (props) => {
             <Col span={24}>
               <div className="selected-drugs">
                 {selectedDrugs.map((item) => (
-                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug}/>
+                  <DrugItem key={item.id} item={item} />
                 ))}
               </div>
             </Col>

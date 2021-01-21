@@ -6,8 +6,7 @@ import { PlusOutlined, SaveOutlined } from "@ant-design/icons";
 import { DrugItem, FileItem } from "../components/chekup";
 import { DropZon } from "../components";
 import { FileStore } from "../store/fileStore";
-import { VisitStore } from "../store/visitStore";
-import { AddFile, createVisit, getDrug, getFile } from "../db/controllers";
+import { AddFile, getDrug, getFile } from "../db/controllers";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -23,23 +22,23 @@ const InputFiled = (label, input) => (
   </div>
 );
 
-// const selectedDrugs = [
-//   {
-//     id: 34,
-//     name: "New Test Drug name",
-//     note: "this is just test note",
-//   },
-//   {
-//     id: 56,
-//     name: "Drug name for test only",
-//     note: "this is a test",
-//   },
-//   {
-//     id: 43,
-//     name: "Foo Bar",
-//     note: "just test note",
-//   },
-// ];
+const selectedDrugs = [
+  {
+    id: 34,
+    name: "New Test Drug name",
+    note: "this is just test note",
+  },
+  {
+    id: 56,
+    name: "Drug name for test only",
+    note: "this is a test",
+  },
+  {
+    id: 43,
+    name: "Foo Bar",
+    note: "just test note",
+  },
+];
 
 // const files = [
 //   {
@@ -75,31 +74,22 @@ export const ChekupScreen = (props) => {
   const [count, setCount] = useState(0);
   const [fileData, setFileData] = useState([]);
   const [drugData, setDrugData] = useState([]);
-  const [selectedDrugs, setSelectedDrugs] = useState([]);
-  const [drugName, setDrugName] = useState("");
-  const [drugNote, setDrugNote] = useState("");
-
+  const [drugName, setDrugName] = useState([]);
+  const [drugNote, setDrugNote] = useState([]);
   const distDir = './attach/'; // attachements folder path
   let { id } = useParams(); // get patient id 
-  // let {
-  //   name,
-  //   patientId,
-  //   setName,
-  //   setPatientId
-  // } = FileStore();
-
-  let fileStore = FileStore();
-
-  let visitStore = VisitStore();
+  let {
+    name,
+    patientId,
+    setName,
+    setPatientId
+  } = FileStore();
 
   useEffect(() => {
-    setDrugName("");
-    setDrugNote("");
-    console.log(JSON.stringify(selectedDrugs));
-
+    console.log(prescriptionData);
     loadDrug(); // get drugs 
     loadData();
-  }, [page, selectedDrugs]);
+  }, [page,prescriptionData]);
 
   // file block
   // =======================================
@@ -119,8 +109,8 @@ export const ChekupScreen = (props) => {
     let data = { name, PatientId };
     AddFile(data, (status) => {
       if (status) {
-        fileStore.setName(null);
-        fileStore.setPatientId(null);
+        setName(null);
+        setPatientId(null);
         loadData();
         message.success("Insert successfully .");
       } else {
@@ -164,42 +154,14 @@ export const ChekupScreen = (props) => {
       }
     });
   }
-  const handleDrugAdd = () => {
-    setSelectedDrugs([
-      ...selectedDrugs,
-      {
-        id: uuidv4(),
-        name: drugName,
-        note: drugNote,
-      },
-    ]);
-  };
-
-  const handlRemoveDrug = (id) => {
-    setSelectedDrugs(selectedDrugs.filter((el) => el.id !== id));
-  };
-
-  const createCheckup = () => {
-    let date = new Date().toString();
-    let pres = JSON.stringify(selectedDrugs);
-    let diagnosis = visitStore.diagnosis;
-    let PatientId = id;
-    let data = { date, diagnosis, pres, PatientId };
-    // console.log(data);
-    createVisit(data, (status) => {
-      if (status) {
-        visitStore.setDate(null);
-        visitStore.setDiagnosis(null);
-        visitStore.setPres(null);
-        visitStore.setPatientId(null);
-
-        message.success("Insert successfully .");
-      } else {
-        message.error("The process is not complete!");
-      }
-    });
+  const handleAddDrug = () => {
+    
+    setPrescriptionData(...prescriptionData,{name:drugName,note:drugNote})
+    // console.log(prescriptionData);
   };
   
+
+
 
   return (
     <div className="page" style={{ paddingTop: 25 }}>
@@ -210,8 +172,6 @@ export const ChekupScreen = (props) => {
               {InputFiled(
                 "The diagnosis",
                 <TextArea
-                  value={visitStore.diagnosis}
-                  onChange={(e) => visitStore.setDiagnosis(e.target.value)}
                   style={{ width: "100%" }}
                   rows={6}
                   placeholder="Write The diagnosis hire . . ."
@@ -222,13 +182,12 @@ export const ChekupScreen = (props) => {
             <Col span={12}>
               {InputFiled("Prescription")}
               <Select
+                onChange={(value) => setDrugName(value)}
                 size="large"
                 showSearch
                 allowClear
-                value={drugName}
                 style={{ width: "100%" }}
                 placeholder="Chose Drug . . ."
-                onChange={(val) => setDrugName(val)}
               >
                 {drugData.map(item => <Option value={item.name} key={item.id}>{item.name}</Option>)}
               </Select>
@@ -251,14 +210,16 @@ export const ChekupScreen = (props) => {
                 size="large"
                 block
                 className="add-btn"
-                onClick={handleDrugAdd}
+                onClick={()=>{
+                  setPrescriptionData(...prescriptionData,{name:drugName,note:drugNote});
+                }}
                 icon={<PlusOutlined />}
               />
             </Col>
             <Col span={24}>
               <div className="selected-drugs">
                 {selectedDrugs.map((item) => (
-                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug}/>
+                  <DrugItem key={item.id} item={item} />
                 ))}
               </div>
             </Col>
@@ -267,7 +228,7 @@ export const ChekupScreen = (props) => {
                 type="link"
                 className="add-btn"
                 size="large"
-                onClick={createCheckup}
+                onClick={()=>console.log(prescriptionData)}
                 icon={<SaveOutlined />}
               >
                 Save & Print

@@ -81,17 +81,14 @@ export const ChekupScreen = (props) => {
 
   const distDir = './attach/'; // attachements folder path
   let { id } = useParams(); // get patient id 
-  // let {
-  //   name,
-  //   patientId,
-  //   setName,
-  //   setPatientId
-  // } = FileStore();
-
-  let fileStore = FileStore();
+  let {
+    name,
+    patientId,
+    setName,
+    setPatientId
+  } = FileStore();
 
   let visitStore = VisitStore();
-
   useEffect(() => {
     setDrugName("");
     setDrugNote("");
@@ -119,8 +116,8 @@ export const ChekupScreen = (props) => {
     let data = { name, PatientId };
     AddFile(data, (status) => {
       if (status) {
-        fileStore.setName(null);
-        fileStore.setPatientId(null);
+        setName(null);
+        setPatientId(null);
         loadData();
         message.success("Insert successfully .");
       } else {
@@ -179,110 +176,115 @@ export const ChekupScreen = (props) => {
     setSelectedDrugs(selectedDrugs.filter((el) => el.id !== id));
   };
 
+  // date
+  // diagnosis
+  // pres
+  // PatientId
+  // setDate
+  // setDiagnosis
+  // setPres
+  // setPatientId
+
+
   const createCheckup = () => {
-    let date = new Date().toString();
-    let pres = JSON.stringify(selectedDrugs);
+    let date = visitStore.date;
     let diagnosis = visitStore.diagnosis;
-    let PatientId = id;
-    let data = { date, diagnosis, pres, PatientId };
-    // console.log(data);
-    createVisit(data, (status) => {
-      if (status) {
-        visitStore.setDate(null);
-        visitStore.setDiagnosis(null);
-        visitStore.setPres(null);
-        visitStore.setPatientId(null);
+    let pres = visitStore.pres;
+    let patientIdVisit = visitStore.patientId;
+    let data = { date, diagnosis, pres, patientIdVisit };
+    console.log(data)
+    // createVisit(data, (status) => {
+    //   if (status) {
+    //     setName(null);
+    //     setPatientId(null);
 
-        message.success("Insert successfully .");
-      } else {
-        message.error("The process is not complete!");
-      }
-    });
+    //     message.success("Insert successfully .");
+    //   } else {
+    //     message.error("The process is not complete!");
+    //   }
+    // });
   };
-  
+}
 
-  return (
-    <div className="page" style={{ paddingTop: 25 }}>
-      <Row gutter={[50, 50]}>
-        <Col span={16}>
-          <Row gutter={[20, 40]}>
-            <Col span={24}>
-              {InputFiled(
-                "The diagnosis",
-                <TextArea
-                  value={visitStore.diagnosis}
-                  onChange={(e) => visitStore.setDiagnosis(e.target.value)}
-                  style={{ width: "100%" }}
-                  rows={6}
-                  placeholder="Write The diagnosis hire . . ."
-                />
-              )}
-            </Col>
-            <Col span={24}></Col>
-            <Col span={12}>
-              {InputFiled("Prescription")}
-              <Select
-                size="large"
-                showSearch
-                allowClear
-                value={drugName}
+return (
+  <div className="page" style={{ paddingTop: 25 }}>
+    <Row gutter={[50, 50]}>
+      <Col span={16}>
+        <Row gutter={[20, 40]}>
+          <Col span={24}>
+            {InputFiled(
+              "The diagnosis",
+              <TextArea
                 style={{ width: "100%" }}
-                placeholder="Chose Drug . . ."
-                onChange={(val) => setDrugName(val)}
-              >
-                {drugData.map(item => <Option value={item.name} key={item.id}>{item.name}</Option>)}
-              </Select>
-            </Col>
-
-            <Col span={9} style={{ display: "flex", alignItems: "flex-end" }}>
-              <Input value={drugNote}
-                onChange={(e) => setDrugNote(e.target.value)}
-                size="large" placeholder="Note" />
-            </Col>
-            <Col
-              span={3}
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                justifyContent: "flex-end",
-              }}
-            >
-              <Button
-                size="large"
-                block
-                className="add-btn"
-                onClick={handleDrugAdd}
-                icon={<PlusOutlined />}
+                rows={6}
+                placeholder="Write The diagnosis hire . . ."
               />
-            </Col>
-            <Col span={24}>
-              <div className="selected-drugs">
-                {selectedDrugs.map((item) => (
-                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug}/>
-                ))}
-              </div>
-            </Col>
-            <Col span={24}>
-              <Button
-                type="link"
-                className="add-btn"
-                size="large"
-                onClick={createCheckup}
-                icon={<SaveOutlined />}
-              >
-                Save & Print
+            )}
+          </Col>
+          <Col span={24}></Col>
+          <Col span={12}>
+            {InputFiled("Prescription")}
+            <Select
+              size="large"
+              showSearch
+              allowClear
+              value={drugName}
+              style={{ width: "100%" }}
+              placeholder="Chose Drug . . ."
+              onChange={(val) => setDrugName(val)}
+            >
+              {drugData.map(item => <Option value={item.name} key={item.id}>{item.name}</Option>)}
+            </Select>
+          </Col>
+
+          <Col span={9} style={{ display: "flex", alignItems: "flex-end" }}>
+            <Input value={drugNote}
+              onChange={(e) => setDrugNote(e.target.value)}
+              size="large" placeholder="Note" />
+          </Col>
+          <Col
+            span={3}
+            style={{
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              size="large"
+              block
+              className="add-btn"
+              onClick={handleDrugAdd}
+              icon={<PlusOutlined />}
+            />
+          </Col>
+          <Col span={24}>
+            <div className="selected-drugs">
+              {selectedDrugs.map((item) => (
+                <DrugItem key={item.id} item={item} />
+              ))}
+            </div>
+          </Col>
+          <Col span={24}>
+            <Button
+              type="link"
+              className="add-btn"
+              size="large"
+              icon={<SaveOutlined />}
+            >
+              Save & Print
               </Button>
-            </Col>
-          </Row>
-        </Col>
-        <Col span={8}>
-          <h4>Attachments</h4>
-          <DropZon onChange={file => handleFileUpload(file)} />
-          {
-            fileData.map(item => <FileItem key={item.id} item={item} />)
-          }
-        </Col>
-      </Row>
-    </div>
-  );
+          </Col>
+        </Row>
+      </Col>
+      <Col span={8}>
+        <h4>Attachments</h4>
+        <DropZon onChange={file => handleFileUpload(file)} />
+        {
+          fileData.map(item => <FileItem key={item.id} item={item} />)
+        }
+      </Col>
+    </Row>
+  </div>
+);
 };

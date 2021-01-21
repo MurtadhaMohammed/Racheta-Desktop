@@ -18,7 +18,7 @@ export const DrugItem = ({ item,onRemove }) => {
           <Button
             style={{ marginRight: -4 }}
             danger
-            onClick={() => onRemove(item.id)}
+            onClick={onDelete}
             type="text"
             icon={<CloseOutlined />}
           />

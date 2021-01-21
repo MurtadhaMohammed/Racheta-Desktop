@@ -258,7 +258,7 @@ export const ChekupScreen = (props) => {
             <Col span={24}>
               <div className="selected-drugs">
                 {selectedDrugs.map((item) => (
-                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug}/>
+                  <DrugItem key={item.id} item={item} onDelete={}/>
                 ))}
               </div>
             </Col>

@@ -91,7 +91,6 @@ export const ChekupScreen = (props) => {
   let fileStore = FileStore();
 
   let visitStore = VisitStore();
-
   useEffect(() => {
     setDrugName("");
     setDrugNote("");
@@ -179,27 +178,38 @@ export const ChekupScreen = (props) => {
     setSelectedDrugs(selectedDrugs.filter((el) => el.id !== id));
   };
 
-  const createCheckup = () => {
-    let date = new Date().toString();
-    let pres = JSON.stringify(selectedDrugs);
-    let diagnosis = visitStore.diagnosis;
-    let PatientId = id;
-    let data = { date, diagnosis, pres, PatientId };
-    // console.log(data);
-    createVisit(data, (status) => {
-      if (status) {
-        visitStore.setDate(null);
-        visitStore.setDiagnosis(null);
-        visitStore.setPres(null);
-        visitStore.setPatientId(null);
+  // date
+  // diagnosis
+  // pres
+  // PatientId
+  // setDate
+  // setDiagnosis
+  // setPres
+  // setPatientId
 
-        message.success("Insert successfully .");
-      } else {
-        message.error("The process is not complete!");
-      }
-    });
+let diagnosis = visitStore.diagnosis;
+  const createCheckup = () => {
+    let date = Date.now();
+    let pres = JSON.stringify(selectedDrugs);
+    let patientId = id;
+    let data = { date, diagnosis, pres, patientId };
+    // visitStore.setDate(null);
+    // visitStore.setDiagnosis(null);
+    // visitStore.setPres(JSON.stringify(selectedDrugs));
+    // visitStore.setPatientId(id);
+    console.log(data);
+    // createVisit(data, (status) => {
+    //   if (status) {
+    //     setName(null);
+    //     setPatientId(null);
+
+    //     message.success("Insert successfully .");
+    //   } else {
+    //     message.error("The process is not complete!");
+    //   }
+    // });
   };
-  
+  // }
 
   return (
     <div className="page" style={{ paddingTop: 25 }}>
@@ -210,8 +220,8 @@ export const ChekupScreen = (props) => {
               {InputFiled(
                 "The diagnosis",
                 <TextArea
-                  value={visitStore.diagnosis}
-                  onChange={(e) => visitStore.setDiagnosis(e.target.value)}
+                  value={diagnosis}
+                  // onChange={(e) => visitStore.setDiagnosis(e.target.value)}
                   style={{ width: "100%" }}
                   rows={6}
                   placeholder="Write The diagnosis hire . . ."
@@ -258,7 +268,7 @@ export const ChekupScreen = (props) => {
             <Col span={24}>
               <div className="selected-drugs">
                 {selectedDrugs.map((item) => (
-                  <DrugItem key={item.id} item={item} onRemove={handlRemoveDrug}/>
+                  <DrugItem key={item.id} item={item} />
                 ))}
               </div>
             </Col>
