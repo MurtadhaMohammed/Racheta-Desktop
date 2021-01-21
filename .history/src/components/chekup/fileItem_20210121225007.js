@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-const { shell } = require('electron');
+const { shell } = require('electron')
 var fs = require('fs');
 var path = require('path');
 export const FileItem = ({ item, onRemove }) => {

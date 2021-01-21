@@ -24,14 +24,13 @@ export const getFile = async (page, patientId, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
     var patientIdWhere = patientId == null ? '%%' : `%${patientId}%`;
-    // var patientNameWhere = patientName == null ? '%%' : `%${patientName}%`;
     let paginate = {
         where: {
             [Op.and]: [
                 { PatientId: { [Op.like]: patientIdWhere } },
             ],
         },
-        // include: [{ model: Patient, where: { name: { [Op.like]: patientNameWhere } } }],
+        include: [{ model: Patient, where: { name: { [Op.like]: patientWhere } } }],
         limit,
         offset,
         order: [["id", "DESC"]],
@@ -53,15 +52,14 @@ export const getFile = async (page, patientId, callback) => {
 export const getAttachments = async (page, patientName, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
-    var patientNameWhere = patientName == null ? '%%' : `%${patientName}%`;
-    // var patientWhere = patientName == null ? '%%' : `%${patientName}%`;
+    var patientWhere = patientName == null ? '%%' : `%${patientName}%`;
     let paginate = {
         // where: {
         //     [Op.and]: [
         //         { PatientId: { [Op.like]: patientId } },
         //     ],
         // },
-        include: [{ model: Patient, where: { name: { [Op.like]: patientNameWhere } } }],
+        include: [{ model: Patient, where: { name: { [Op.like]: patientWhere } } }],
         limit,
         offset,
         order: [["id", "DESC"]],

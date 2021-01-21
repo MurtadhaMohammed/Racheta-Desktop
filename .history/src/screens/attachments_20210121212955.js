@@ -2,61 +2,61 @@ import React, { useState, useEffect } from "react";
 import { Select, Button, Empty, Spin, Drawer, Row, Col } from "antd";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { AttachmentItem } from "../components/attachments";
-import { getFile,getAttachments } from "../db/controllers";
+import { getAttachments, getFile } from "../db/controllers";
 
 const { Option } = Select;
 
-// const files = [
-//   {
-//     id: 1,
-//     title: 'Test DH results doers Foo Yees',
-//     name: 'مرتضى محمد علاء',
-//     date: 'Nov 20, 2020',
-//     type: 'pdf'
-//   },
-//   {
-//     id: 3,
-//     title: 'Test DH results doers Bar Noo This Test Only',
-//     name: 'ِAli Salam',
-//     date: 'Nov 20, 2020',
-//     type: 'xls'
-//   },
-//   {
-//     id: 89,
-//     title: 'Test DH results doers',
-//     name: 'Marwa Salam',
-//     date: 'Nov 20, 2020',
-//     type: 'pdf'
-//   },
-//   {
-//     id: 4,
-//     title: 'Test DH results doers',
-//     name: 'Yasser Ali',
-//     date: 'Nov 20, 2020',
-//     type: 'wav'
-//   },
-//   {
-//     id: 5,
-//     title: 'Test DH results doers',
-//     name: 'Noor Jasim Abed',
-//     date: 'Nov 20, 2020',
-//     type: 'doc'
-//   },
-//   {
-//     id: 6,
-//     title: 'Test DH results doers Foo Yees',
-//     name: 'مرتضى محمد علاء',
-//     date: 'Nov 20, 2020',
-//     type: 'pdf'
-//   },
-//   {
-//     id: 7,
-//     title: 'Test DH results doers Bar Noo This Test Only',
-//     name: 'ِAli Salam',
-//     date: 'Nov 20, 2020',
-//     type: 'xls'
-//   },
-// ];
+const files = [
+  {
+    id: 1,
+    title: 'Test DH results doers Foo Yees',
+    name: 'مرتضى محمد علاء',
+    date: 'Nov 20, 2020',
+    type: 'pdf'
+  },
+  {
+    id: 3,
+    title: 'Test DH results doers Bar Noo This Test Only',
+    name: 'ِAli Salam',
+    date: 'Nov 20, 2020',
+    type: 'xls'
+  },
+  {
+    id: 89,
+    title: 'Test DH results doers',
+    name: 'Marwa Salam',
+    date: 'Nov 20, 2020',
+    type: 'pdf'
+  },
+  {
+    id: 4,
+    title: 'Test DH results doers',
+    name: 'Yasser Ali',
+    date: 'Nov 20, 2020',
+    type: 'wav'
+  },
+  {
+    id: 5,
+    title: 'Test DH results doers',
+    name: 'Noor Jasim Abed',
+    date: 'Nov 20, 2020',
+    type: 'doc'
+  },
+  {
+    id: 6,
+    title: 'Test DH results doers Foo Yees',
+    name: 'مرتضى محمد علاء',
+    date: 'Nov 20, 2020',
+    type: 'pdf'
+  },
+  {
+    id: 7,
+    title: 'Test DH results doers Bar Noo This Test Only',
+    name: 'ِAli Salam',
+    date: 'Nov 20, 2020',
+    type: 'xls'
+  },
+];
 
 export const AttachmentsScreen = (props) => {
   const [loading, setLoading] = useState(true);
@@ -70,16 +70,17 @@ export const AttachmentsScreen = (props) => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    loadData();
+    // loadData();
+    console.log(loadData);
   }, [page]);
 
-  let name = "ali";
+  let id = 2;
   const loadData = () => {
     setLoading(true);
-    getAttachments(page,"", (result) => {
+    
+    getAttachments(page, id, (result) => {
       if (result.status) {
         setLoading(false);
-        // console.log(result.files);
         setData(result.files);
         setCount(result.total);
         setPages(result.pages);
@@ -106,7 +107,7 @@ export const AttachmentsScreen = (props) => {
         <Row gutter={[20, 20]}>
           {
             data.map(item => <Col key={item.id} md={12} lg={8}>
-              <AttachmentItem item={item}  user={item.Patient.name}/>
+              <AttachmentItem item={item}  user="ali sabar"/>
             </Col>)
           }
 

@@ -179,13 +179,13 @@ function App() {
     //     alert("error");
     //   }
     // });
-    // getAttachments(1, "ali", (resp) => {
-    //   if (resp.status) {
-    //         console.log(resp.files);
-    //       } else {
-    //         alert("error");
-    //       }
-    // });
+    getAttachments(1, "ali", (resp) => {
+      if (resp.status) {
+            console.log(resp.files);
+          } else {
+            alert("error");
+          }
+    });
 
     // const file1 = {
     //     name: 'updated name',

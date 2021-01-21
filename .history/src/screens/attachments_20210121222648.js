@@ -73,13 +73,12 @@ export const AttachmentsScreen = (props) => {
     loadData();
   }, [page]);
 
-  let name = "ali";
+  let id = 2;
   const loadData = () => {
     setLoading(true);
     getAttachments(page,"", (result) => {
       if (result.status) {
         setLoading(false);
-        // console.log(result.files);
         setData(result.files);
         setCount(result.total);
         setPages(result.pages);
@@ -106,7 +105,7 @@ export const AttachmentsScreen = (props) => {
         <Row gutter={[20, 20]}>
           {
             data.map(item => <Col key={item.id} md={12} lg={8}>
-              <AttachmentItem item={item}  user={item.Patient.name}/>
+              <AttachmentItem item={item}  user="ali sabar"/>
             </Col>)
           }
 

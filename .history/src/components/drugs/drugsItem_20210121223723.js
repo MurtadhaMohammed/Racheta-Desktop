@@ -13,7 +13,7 @@ export const DrugsItem = ({ item,onRemove }) => {
         </div>
       </div>
       <Button
-      onClick= {() => onRemove(item.id)}
+      onClick= {onRemove}
         type="text"
         icon={<FiTrash2 />} />
     </div>

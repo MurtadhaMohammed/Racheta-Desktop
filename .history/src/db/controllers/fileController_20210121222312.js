@@ -20,7 +20,7 @@ export const AddFile = async (data, callback) => {
 };
 
 
-export const getFile = async (page, patientId, callback) => {
+export const getFile = async (page, patientId,patientName, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
     var patientIdWhere = patientId == null ? '%%' : `%${patientId}%`;
@@ -53,8 +53,7 @@ export const getFile = async (page, patientId, callback) => {
 export const getAttachments = async (page, patientName, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
-    var patientNameWhere = patientName == null ? '%%' : `%${patientName}%`;
-    // var patientWhere = patientName == null ? '%%' : `%${patientName}%`;
+    var patientWhere = patientName == null ? '%%' : `%${patientName}%`;
     let paginate = {
         // where: {
         //     [Op.and]: [

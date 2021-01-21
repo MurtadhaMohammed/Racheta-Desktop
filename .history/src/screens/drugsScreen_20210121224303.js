@@ -67,7 +67,6 @@ export const DrugsScreen = (props) => {
     deleteDrug(id, (result) => {
       if (result.status) {
         message.success("delete drug succefully");
-        loadData();
       } else {
         message.error("error");
       }

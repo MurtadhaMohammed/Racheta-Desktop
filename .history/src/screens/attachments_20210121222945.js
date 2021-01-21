@@ -106,7 +106,7 @@ export const AttachmentsScreen = (props) => {
         <Row gutter={[20, 20]}>
           {
             data.map(item => <Col key={item.id} md={12} lg={8}>
-              <AttachmentItem item={item}  user={item.Patient.name}/>
+              <AttachmentItem item={item}  user={console.log(item.Patient)}/>
             </Col>)
           }
 

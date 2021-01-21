@@ -1,19 +1,14 @@
 import React from "react";
-var fs = require('fs');
-const { shell } = require('electron');
-var path = require('path');
 
-
-
-
-export const AttachmentItem = ({ item, user }) => {
-  const handleOpenFile = () => {
-    const distDir = './attach/'; // attachements folder path
-    if (fs.existsSync(distDir)) {
-      let fullPath = path.resolve(distDir);
-      shell.openPath(fullPath + "\\" + item.name);
-    }
+const handleOpenFile = () => {
+  const distDir = './attach/'; // attachements folder path
+  if (fs.existsSync(distDir)) {
+    let fullPath = path.resolve(distDir);
+    shell.openPath(fullPath + "\\" + item.name);
   }
+}
+
+export const AttachmentItem = ({ item,user }) => {
   return (
     <div className="attachment-item" onClick={handleOpenFile}>
       <span className={`fiv-viv fiv-icon-${item.name.split('.').pop().toLowerCase()}`}></span>

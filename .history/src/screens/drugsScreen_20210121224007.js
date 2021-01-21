@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Select, Button, message, Row, Col } from "antd";
 import { DrugForm, DrugsItem } from "../components/drugs";
-import { createDrug, deleteDrug, getDrug } from "../db/controllers";
+import { createDrug, getDrug } from "../db/controllers";
 import { DrugStore } from "../store/drugStore";
 
 const { Option } = Select;
@@ -65,13 +65,12 @@ export const DrugsScreen = (props) => {
 
   const handleDeleteDrug = (id) => {
     deleteDrug(id, (result) => {
-      if (result.status) {
-        message.success("delete drug succefully");
-        loadData();
-      } else {
-        message.error("error");
-      }
-    });
+            if (result.status) {
+              message.success("delete drug succefully");
+            } else {
+              message.error("error");
+            }
+          });
   }
 
   return (
@@ -88,7 +87,7 @@ export const DrugsScreen = (props) => {
         <Row gutter={[20, 20]}>
           {data.map((item) => (
             <Col key={item.id} md={12} lg={8}>
-              <DrugsItem item={item} onRemove={handleDeleteDrug}/>
+              <DrugsItem item={item} />
             </Col>
           ))}
         </Row>

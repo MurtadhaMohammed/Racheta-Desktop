@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import { FiTrash2 } from "react-icons/fi";
 
-export const DrugsItem = ({ item,onRemove }) => {
+export const DrugsItem = ({ item }) => {
   return (
     <div className="drugs-item">
       <div style={{ display: 'inline-flex' }}>
@@ -13,7 +13,7 @@ export const DrugsItem = ({ item,onRemove }) => {
         </div>
       </div>
       <Button
-      onClick= {() => onRemove(item.id)}
+      onClick= {onRemove}
         type="text"
         icon={<FiTrash2 />} />
     </div>

@@ -6,7 +6,7 @@ var path = require('path');
 
 
 
-export const AttachmentItem = ({ item, user }) => {
+export const AttachmentItem = ({ item,user }) => {
   const handleOpenFile = () => {
     const distDir = './attach/'; // attachements folder path
     if (fs.existsSync(distDir)) {

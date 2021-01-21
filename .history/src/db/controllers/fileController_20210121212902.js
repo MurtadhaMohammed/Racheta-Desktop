@@ -23,15 +23,14 @@ export const AddFile = async (data, callback) => {
 export const getFile = async (page, patientId, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
-    var patientIdWhere = patientId == null ? '%%' : `%${patientId}%`;
-    // var patientNameWhere = patientName == null ? '%%' : `%${patientName}%`;
+    var patientWhere = patientId == null ? '%%' : `%${patientId}%`;
     let paginate = {
         where: {
             [Op.and]: [
-                { PatientId: { [Op.like]: patientIdWhere } },
+                { PatientId: { [Op.like]: patientWhere } },
             ],
         },
-        // include: [{ model: Patient, where: { name: { [Op.like]: patientNameWhere } } }],
+        // include: {Patient},
         limit,
         offset,
         order: [["id", "DESC"]],
@@ -53,15 +52,14 @@ export const getFile = async (page, patientId, callback) => {
 export const getAttachments = async (page, patientName, callback) => {
     const offset = (page - 1) * 8;
     const limit = 8;
-    var patientNameWhere = patientName == null ? '%%' : `%${patientName}%`;
-    // var patientWhere = patientName == null ? '%%' : `%${patientName}%`;
+    var patientWhere = patientName == null ? '%%' : `%${patientName}%`;
     let paginate = {
-        // where: {
-        //     [Op.and]: [
-        //         { PatientId: { [Op.like]: patientId } },
-        //     ],
-        // },
-        include: [{ model: Patient, where: { name: { [Op.like]: patientNameWhere } } }],
+        where: {
+            [Op.and]: [
+                { PatientId: { [Op.like]: patientWhere } },
+            ],
+        },
+        include: {Patient},
         limit,
         offset,
         order: [["id", "DESC"]],
@@ -99,7 +97,7 @@ export const updateFile = async (id, data, callback) => {
         .catch((e) => callback({ status: false }));
 };
 
-export const deleteFile = async (id, callback) => {
+export const deleteFile= async (id, callback) => {
     sequelize
         .sync()
         .then(async () => {

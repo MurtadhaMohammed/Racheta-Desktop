@@ -15,7 +15,7 @@ import { Button } from "antd";
 
 import { HashRouter as Router, Switch, Route, useLocation } from "react-router-dom";
 
-import { updatePatient, deletePatient, createVisit, getVisits, updateVisit, deleteVisit, AddFile, getfile, updateFile, deleteFile, createDrug, getDrug,updateDrug,deleteDrug, getAttachments } from "../src/db/controllers"
+import { updatePatient, deletePatient, createVisit, getVisits, updateVisit, deleteVisit, AddFile, getfile, updateFile, deleteFile, createDrug, getDrug,updateDrug,deleteDrug } from "../src/db/controllers"
 
 const SreachComponent = () => (
   <div className="search-box">
@@ -179,13 +179,13 @@ function App() {
     //     alert("error");
     //   }
     // });
-    // getAttachments(1, "ali", (resp) => {
-    //   if (resp.status) {
-    //         console.log(resp.files);
-    //       } else {
-    //         alert("error");
-    //       }
-    // });
+    getAttachments(1, id, (result) => {
+      if (resp.status) {
+            console.log(resp.files);
+          } else {
+            alert("error");
+          }
+    });
 
     // const file1 = {
     //     name: 'updated name',
