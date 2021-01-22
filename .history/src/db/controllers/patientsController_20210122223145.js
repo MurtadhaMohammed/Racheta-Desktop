@@ -19,12 +19,11 @@ export const createPatient = async (data, callback) => {
 export const getPatients = async (page, query,callback) => {
   const offset = (page - 1) * 8;
   const limit = 8;
-  var patientWhere = query == null ? '%%' : `%${query}%`;
-
+  
   let paginate = {
     where: {
       [Op.and]: [
-        { name: { [Op.like]: patientWhere } },
+        { name: { [Op.like]: `%${query}%` } },
       ],
     },
     limit,

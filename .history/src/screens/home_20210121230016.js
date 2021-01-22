@@ -3,7 +3,7 @@ import { Select, Button, Empty, Spin, Drawer, message } from "antd";
 import { PatientItem, PatientForm } from "../components/home";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { PatientStore } from "../store/patinetStore";
-import { createPatient, deletePatient, getPatients } from "../db/controllers";
+import { createPatient, getPatients } from "../db/controllers";
 
 const { Option } = Select;
 
@@ -118,15 +118,8 @@ export const HomeScreen = (props) => {
     });
   };
 
-  const handleDeletePatient = (id) => {
-    deletePatient(id, (result) => {
-      if (result.status) {
-        message.success("delete Patient");
-        loadData();
-      } else {
-        message.error("error");
-      }
-    });
+  const handleDeletePatient = (id)=>{
+
   }
 
   return (
@@ -147,13 +140,13 @@ export const HomeScreen = (props) => {
       <section className="patients-list">
         <Spin tip="Loading..." spinning={loading}>
           {data.length > 0 ? (
-            data.map((item) => <PatientItem key={item.id} item={item} onRemove={handleDeletePatient} />)
+            data.map((item) => <PatientItem key={item.id} item={item} />)
           ) : (
-              <Empty
-                style={{ padding: 50 }}
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            )}
+            <Empty
+              style={{ padding: 50 }}
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
+          )}
           <div className="patient-item list-footer">
             <div className="left">{count} Patients for search results</div>
             <div className="right">

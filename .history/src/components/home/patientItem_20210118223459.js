@@ -1,38 +1,17 @@
 import React from "react";
-import { Modal, Button, Space } from 'antd';
+import { Button } from "antd";
 import {
-  ExclamationCircleOutlined,
   EditOutlined,
   DeleteOutlined,
   HistoryOutlined,
 } from "@ant-design/icons";
-const { confirm } = Modal;
 import { FaMapMarkerAlt, FaCopy } from "react-icons/fa";
 import Avatar from "antd/lib/avatar/avatar";
 import { useHistory } from "react-router-dom";
 var getAge = require('get-age')
 
-export const PatientItem = ({ item, onRemove }) => {
+export const PatientItem = ({ item }) => {
   let history = useHistory();
-
-  function showDeleteConfirm() {
-    confirm({
-      title: 'Are you sure delete this patient?',
-      icon: <ExclamationCircleOutlined />,
-      content: 'if you delete patient will delete everything associated with him! ',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk() {
-        onRemove(item.id);
-        // console.log('Cancel');
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
-  };
-
   return (
     <div className="patient-item">
       <div className="item-name">
@@ -72,7 +51,7 @@ export const PatientItem = ({ item, onRemove }) => {
       <div className="item-actions">
         <Button type="text" icon={<HistoryOutlined />} />
         <Button type="text" icon={<EditOutlined />} />
-        <Button onClick={showDeleteConfirm} type="text" danger icon={<DeleteOutlined />} />
+        <Button type="text" danger icon={<DeleteOutlined />} />
       </div>
     </div>
   );

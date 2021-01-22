@@ -24,8 +24,8 @@ export const PatientItem = ({ item, onRemove }) => {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        onRemove(item.id);
-        // console.log('Cancel');
+        // onRemove(item.id)
+        console.log('Cancel');
       },
       onCancel() {
         console.log('Cancel');

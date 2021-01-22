@@ -1,12 +1,10 @@
 import React from "react";
-import { Modal, Button, Space } from 'antd';
+import { Button } from "antd";
 import {
-  ExclamationCircleOutlined,
   EditOutlined,
   DeleteOutlined,
   HistoryOutlined,
 } from "@ant-design/icons";
-const { confirm } = Modal;
 import { FaMapMarkerAlt, FaCopy } from "react-icons/fa";
 import Avatar from "antd/lib/avatar/avatar";
 import { useHistory } from "react-router-dom";
@@ -24,8 +22,8 @@ export const PatientItem = ({ item, onRemove }) => {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        onRemove(item.id);
-        // console.log('Cancel');
+        // onRemove(item.id)
+        console.log('Cancel');
       },
       onCancel() {
         console.log('Cancel');

@@ -118,11 +118,10 @@ export const HomeScreen = (props) => {
     });
   };
 
-  const handleDeletePatient = (id) => {
-    deletePatient(id, (result) => {
+  const handleDeletePatient = (id)=>{
+deletePatient(id, (result) => {
       if (result.status) {
-        message.success("delete Patient");
-        loadData();
+        message.destroy("delete Patient")
       } else {
         message.error("error");
       }
@@ -149,11 +148,11 @@ export const HomeScreen = (props) => {
           {data.length > 0 ? (
             data.map((item) => <PatientItem key={item.id} item={item} onRemove={handleDeletePatient} />)
           ) : (
-              <Empty
-                style={{ padding: 50 }}
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            )}
+            <Empty
+              style={{ padding: 50 }}
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
+          )}
           <div className="patient-item list-footer">
             <div className="left">{count} Patients for search results</div>
             <div className="right">
